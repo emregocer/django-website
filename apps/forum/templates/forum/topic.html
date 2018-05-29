@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'forum/style.css' %}">
+{% endblock %}
+
+{% block head_title %}
+    {{ topic.topic_subject }}
+{% endblock %}
+
+{% block content %}
+
+<div class="forum-index row bg-light">
+
+    {% if replies.has_previous != True %}
+    <div class="topic-message col-md-12">
+
+        <div class="topic-date text-right">{{ topic.topic_date }}</div>
+        
+        <div class="user-profile">
+            <img src="https://www.lycatv.tv/img/web/avatar_1.png" class="user-thumbnail img-thumbnail" />
+            <div class="user-username">{{ topic.topic_by }}</div>
+        </div> 
+        
+        {{ topic.topic_content }} 
+    </div>
+    {% endif %}
+
+    {% if replies %}
+        <div class="forum-topic-replies col-md-12 no-padding">
+            {% for reply in replies %}
+                <div class="forum-topic-reply col-md-12">
+                        <div class="user-profile">
+                            <div class="text-right">{{ reply.reply_date }}</div>
+                            <img src="https://www.lycatv.tv/img/web/avatar_1.png" class="user-thumbnail img-thumbnail" />
+                            <div class="user-username">{{ reply.reply_by }}</div>
+                        </div> 
+                    
+                        {{ reply.reply_content }}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if error_message %}
+            <p class="topic-error-message"><strong>{{ error_message }}</strong></p>
+        {% endif %}
+
+    {% else %}
+        <p class="topic-no-replies col-md-12">There are no replies to show.</p>
+    {% endif %}
+
+
+    <div class="topic-send-reply-container col-md-12">
+        <form action="{% url 'forum:reply' topic.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="reply_content" id="reply_content">
+            <input type="submit" value="Reply">
+        </form>
+    </div>
+    
+    <div class="pagination mx-auto">
+        <span class="step-links">
+            {% if replies.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ replies.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ replies.number }} of {{ replies.paginator.num_pages }}.
+            </span>
+
+            {% if replies.has_next %}
+                <a href="?page={{ replies.next_page_number }}">next</a>
+                <a href="?page={{ replies.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+</div>
+
+{% endblock %}

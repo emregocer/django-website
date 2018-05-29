@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/home/emre/.virtualenvs/devenv/bin/python",
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django"
+   ],
+   "python.linting.pylintPath": "/home/emre/.virtualenvs/devenv/lib/python3.6/site-packages/pylint"
+}

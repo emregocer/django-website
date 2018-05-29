@@ -1,0 +1,60 @@
+.no-padding{
+    padding: 0;
+}
+
+/* Forum Generic */
+
+.forum-header{
+    margin-bottom:10px;
+}
+
+.forum-p-list-item{
+    padding:20px;
+}
+
+.forum-p-list-item .forum-p-category-name, .forum-p-topic-name{
+    margin-left:10px;
+}
+.forum-p-list-item:nth-child(2n+1){
+    background: grey;
+}
+
+.forum-p-list-item a{
+    color:black;
+    text-decoration:none;
+}
+
+/* Topic */
+
+.forum-topic-reply{
+    padding:20px;
+}
+
+.topic-message{
+    margin-top:20px;
+    margin-bottom:20px;
+    padding:20px;
+}
+
+.topic-send-reply-container{
+    margin-top:20px;
+}
+
+.forum-topic-reply:nth-child(2n+1){
+    background: grey;
+}
+
+.pagination{
+    margin-bottom:20px;
+}
+
+/* Message profile */
+
+.user-profile{
+    margin-bottom:20px;
+}
+
+.user-thumbnail{
+    width:60px;
+    height:60px;
+}

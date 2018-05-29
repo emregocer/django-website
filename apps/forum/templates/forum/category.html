@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'forum/style.css' %}">
+{% endblock %}
+
+{% block head_title %}
+    {{ category.cat_name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="forum-index bg-light">
+
+    <div class="forum-header col-md-12">
+        <h1 class="page-header">
+            {{ category.cat_name }}
+        </h1>
+        {{ category.cat_description }}
+
+        <a href="{% url 'forum:create_topic' category.id %}" class="btn btn-success pull-right">Create a topic</a>
+    </div>
+
+    {% if topics %}
+        <div class="forum-topics row no-gutters">
+            {% for topic in topics %}
+                <div class="forum-topic col-md-12 forum-p-list-item">
+                    <a href="{% url 'forum:topic' topic.id %}" class="forum-p-category-name">{{ topic.topic_subject }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>There are no topics to show.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

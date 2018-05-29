@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'forum/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="forum-index bg-light">
+    <div class="forum-header col-md-12">
+        <h1 class="page-header">Categories</h1>
+    </div>
+
+    {% if categories %}
+        <div class="forum-categories row no-gutters">
+            {% for category in categories %}
+                <div class="forum-category col-md-12 forum-p-list-item">
+                    <a href="{% url 'forum:category' category.id %}" class="forum-p-topic-name">{{ category.cat_name }}</a>
+                </div>
+            {% endfor %}
+        </div>        
+    {% else %}
+        <p>There are no categories to show.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
