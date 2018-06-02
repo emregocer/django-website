@@ -146,8 +146,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-# APPS_DIR points at /project.
-# ROOT_DIR points at 1 level above it.
+# APPS_DIR points at /apps.
+# ROOT_DIR points at /.
 
 STATIC_URL = '/static/'
 
