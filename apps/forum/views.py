@@ -4,6 +4,7 @@ from django.utils.timezone import now
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Category, Topic, Reply
 
@@ -39,9 +40,10 @@ class TopicDetailView(DetailView):
 
     template_name="forum/topic.html"
 
-class CreateTopic(CreateView):
+class CreateTopic(LoginRequiredMixin, CreateView):
     model = Topic
     fields=['topic_subject', 'topic_content']
+    login_url='/accounts/google/login'
 
     def dispatch(self, request, *args, **kwargs):
         self.category = get_object_or_404(Category, pk=kwargs['pk'])
@@ -49,16 +51,17 @@ class CreateTopic(CreateView):
 
     def form_valid(self, form):
         form.instance.topic_date = now()
-        form.instance.topic_by = self.request.user
+        form.instance.topic_by = self.request.user or "Anonymous"
         form.instance.topic_cat = self.category
         return super(CreateTopic, self).form_valid(form)
 
     def get_success_url(self):
         return reverse("forum:topic", args=(self.object.id,))
 
-class CreateReply(CreateView):
+class CreateReply(LoginRequiredMixin, CreateView):
     model = Reply
     fields=['reply_content']
+    login_url='/accounts/google/login'
 
     def dispatch(self, request, *args, **kwargs):
         self.topic = get_object_or_404(Topic, pk=kwargs['pk']) # get the topic_id from the url
@@ -67,7 +70,7 @@ class CreateReply(CreateView):
     def form_valid(self, form):
         form.instance.reply_date = now()
         form.instance.reply_topic = self.topic
-        form.instance.reply_by = self.request.user
+        form.instance.reply_by = self.request.user or "Anonymous"
         return super(CreateReply, self).form_valid(form)
 
     def get_success_url(self):
